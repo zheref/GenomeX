@@ -8,6 +8,12 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
+import AuthReducer, {initialState as authInitialState} from '../stores/auth/reducer';
+import {fetchIdentityString} from '../repositories/auth';
+import {restoreIdentity, signIn, signOut} from '../stores/auth/creators';
+
+const AuthContext = React.createContext({});
+
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -25,10 +31,44 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const [state, dispatch] = React.useReducer(AuthReducer, authInitialState);
+
+  React.useEffect(() => {
+    const bootstrapAuth = async () => {
+      try {
+        const identity = await fetchIdentityString();
+        if (identity) {
+          dispatch(restoreIdentity(identity));
+        }
+      } catch (e) {
+        // TODO: Display user friendly error
+        console.error(e);
+      }
+    };
+
+    bootstrapAuth().then(() => {});
+  }, []);
+
+  const authContext = React.useMemo(() => ({
+    signIn: (torreHandle: string) => dispatch(signIn(torreHandle)),
+    signOut: () => dispatch(signOut()),
+  }), []);
+
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-    </Stack.Navigator>
+    <AuthContext.Provider value={authContext}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {state.userIdentity == null ? (
+          <>
+            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+          </>
+        )}
+      </Stack.Navigator>
+    </AuthContext.Provider>
   );
 }
