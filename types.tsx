@@ -5,14 +5,17 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Genome: undefined;
+  Jobs: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type GenomeParamList = {
+  GenomeProfile: undefined;
+  GenomeHistory: undefined;
+  GenomeSkill: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type JobsParamList = {
+  JobSearch: undefined;
+  JobDetails: undefined;
 };

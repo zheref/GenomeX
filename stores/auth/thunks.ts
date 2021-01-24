@@ -8,7 +8,6 @@ export const bootstrapThunk = (): StateIndependentThunk => async (dispatch) => {
 
     if (identity) {
       dispatch(restoreIdentityAction(identity));
-      console.log(`gotten identity ${identity}`);
     }
   } catch (e) {
     // TODO: Display user friendly error
