@@ -11,11 +11,10 @@ import LinkingConfiguration from './LinkingConfiguration';
 import AuthReducer, {initialState as authInitialState} from '../stores/auth/reducer';
 import {fetchIdentityString} from '../repositories/auth';
 import {restoreIdentity, signIn, signOut} from '../stores/auth/creators';
+import IdentifyYourself from '../screens/IdentifyYourself';
 
 const AuthContext = React.createContext({});
 
-// If you are not familiar with React Navigation, we recommend going through the
-// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -58,10 +57,7 @@ function RootNavigator() {
     <AuthContext.Provider value={authContext}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {state.userIdentity == null ? (
-          <>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-          </>
+            <Stack.Screen name="Identity" component={IdentifyYourself} />
         ) : (
           <>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
