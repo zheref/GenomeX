@@ -1,14 +1,14 @@
 import {ActionTypes} from './actions';
 import {Action} from '../types';
 
-export function restoreIdentity(identity: string): Action {
+export function restoreIdentityAction(identity: string): Action {
   return {
     type: ActionTypes.restoreIdentity,
     payload: identity,
   };
 }
 
-export function signIn(identity: string): Action {
+export function signInAction(identity: string): Action {
   return {
     type: ActionTypes.signIn,
     payload: identity,

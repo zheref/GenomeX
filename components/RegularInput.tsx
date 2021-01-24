@@ -27,6 +27,7 @@ export default function RegularInput(props: RegularInputProps) {
   return (
       <TextInput placeholder={props.placeholder || ''} style={{...styles.own, ...props.style}}
                  returnKeyType={props.returnKeyType} autoCompleteType="username" value={props.value}
-                 onChangeText={props.onChangeText} keyboardType={Platform.select({ios: 'twitter', android: 'email-address'})} />
+                 onChangeText={props.onChangeText}
+                 keyboardType={Platform.select({ios: 'twitter', android: 'email-address'})}/>
   );
 }

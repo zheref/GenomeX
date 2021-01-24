@@ -1,7 +1,7 @@
 import Keys from '../resources/keys';
 
 export async function fetchIdentityString(): Promise<string | null> {
-  return 'mocked-identity';
+  return 'persisted-mocked-identity';
 }
 
 export async function persistIdentityString(identity: string): Promise<void> {

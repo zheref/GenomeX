@@ -1,21 +1,38 @@
 import configureMockStore from 'redux-mock-store';
-import expect from 'expect';
-import fetchMock from 'fetch-mock';
+import thunk from 'redux-thunk';
+import {initialState} from "./reducer";
+import {bootstrapThunk, identifyThunk} from './thunks';
+import {restoreIdentityAction, signInAction} from './creators';
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-import thunk from 'redux-thunk';
+
+jest.useFakeTimers();
+
+const setupState = () => ({
+  auth: initialState,
+});
 
 jest.mock('../../repositories/auth', () => ({
-  __esModule: true, // this property makes it work
-  default: mockSleepSessionsService,
+  __esModule: true,
+  ...jest.requireActual('../../repositories/auth.mock'),
 }));
 
 describe('auth side effects', () => {
-  afterEach(() => {
-    fetchMock.restore();
+  it('restores identity after being retrieved from key-value storage from platform', async () => {
+    const store = mockStore(setupState());
+    await store.dispatch(bootstrapThunk());
+    expect(store.getActions()).toStrictEqual([
+        restoreIdentityAction('persisted-mocked-identity'),
+    ]);
   });
 
-  it('restores identity after being retrieved from key-value storage from platform', () => {
-
-  })
+  it('persists identity onto key-value storage from platform and set identity onto state', async () => {
+    const identity = 'mocked-identity';
+    const store = mockStore(setupState());
+    await store.dispatch(identifyThunk(identity));
+    expect(store.getActions()).toStrictEqual([
+        signInAction(identity),
+    ])
+  });
 });

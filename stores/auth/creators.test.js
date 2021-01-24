@@ -1,10 +1,10 @@
-import {restoreIdentity, signIn, signOut} from "./creators";
+import {restoreIdentityAction, signInAction, signOut} from "./creators";
 import {ActionTypes} from "./actions";
 
 describe('auth creators', () => {
   test('restore identity creator builds valid action with corresponding payload', () => {
     const identity = 'mocked-identity';
-    expect(restoreIdentity(identity)).toStrictEqual({
+    expect(restoreIdentityAction(identity)).toStrictEqual({
       type: ActionTypes.restoreIdentity,
       payload: identity,
     });
@@ -12,7 +12,7 @@ describe('auth creators', () => {
 
   test('sign in creator builds valid action with corresponding payload', () => {
     const identity = 'mocked-identity';
-    expect(signIn(identity)).toStrictEqual({
+    expect(signInAction(identity)).toStrictEqual({
       type: ActionTypes.signIn,
       payload: identity,
     });
