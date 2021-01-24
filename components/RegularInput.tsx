@@ -1,11 +1,13 @@
 import React from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {ReturnKeyTypeOptions, StyleSheet, TextInput, View} from 'react-native';
 import Color from '../resources/colors';
 import Font from '../resources/fonts';
 
 interface RegularInputProps {
   style?: object;
   placeholder?: string;
+  returnKeyType?: ReturnKeyTypeOptions;
+  autocompleteType?: string;
 }
 
 const styles = StyleSheet.create({
@@ -21,6 +23,7 @@ const styles = StyleSheet.create({
 
 export default function RegularInput(props: RegularInputProps) {
   return (
-      <TextInput placeholder={props.placeholder || ''} style={{...styles.own, ...props.style}} />
+      <TextInput placeholder={props.placeholder || ''} style={{...styles.own, ...props.style}}
+                 returnKeyType={props.returnKeyType} autoCompleteType="username"/>
   );
 }

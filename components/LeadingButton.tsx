@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function LeadingButton(props: LeadingButtonProps) {
+export default function LeadingButton(props: LeadingButtonProps): React.ComponentElement<LeadingButtonProps, any> {
   return (
       <TouchableOpacity style={{...styles.own, ...props.style}}>
         <Text style={styles.caption}>{props.caption}</Text>
