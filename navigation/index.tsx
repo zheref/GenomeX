@@ -8,12 +8,11 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
-import AuthReducer, {initialState as authInitialState} from '../stores/auth/reducer';
-import {fetchIdentityString} from '../repositories/auth';
-import {restoreIdentity, signIn, signOut} from '../stores/auth/creators';
 import IdentifyYourself from '../screens/IdentifyYourself';
 import {RootState} from '../stores/auth/types';
 import {connect} from 'react-redux';
+import {bootstrapThunk} from '../stores/auth/thunks';
+import {Dispatch} from 'react';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -21,51 +20,41 @@ const mapStateToProps = (state: RootState) => ({
   identity: state.auth.userIdentity,
 });
 
-const listening = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  dispatchBootstrap: () => { dispatch(bootstrapThunk()) },
+});
+
+const reactive = connect(mapStateToProps, mapDispatchToProps);
 
 interface RootNavigatorProps {
   identity: string | null;
+  dispatchBootstrap: () => void;
 }
 
-function rootNavigator({identity}: RootNavigatorProps): React.ComponentElement<RootNavigatorProps, any> {
-  const [state, dispatch] = React.useReducer(AuthReducer, authInitialState);
-
+function rootNavigator({identity, dispatchBootstrap}: RootNavigatorProps): React.ComponentElement<RootNavigatorProps, any> {
   React.useEffect(() => {
-    const bootstrapAuth = async () => {
-      try {
-        const identity = await fetchIdentityString();
-        if (identity) {
-          dispatch(restoreIdentity(identity));
-        }
-      } catch (e) {
-        // TODO: Display user friendly error
-        console.error(e);
-      }
-    };
-
-    bootstrapAuth().then(() => {});
+    dispatchBootstrap();
   }, []);
 
-  const authContext = React.useMemo(() => ({
-    signIn: (torreHandle: string) => dispatch(signIn(torreHandle)),
-    signOut: () => dispatch(signOut()),
-  }), []);
+  const authenticatedStack: React.ReactElement = (
+      <>
+        <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      </>
+  );
+
+  const incognitoStack: React.ReactElement = (
+      <Stack.Screen name="Identity" component={IdentifyYourself} />
+  )
 
   return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {identity == null ? (
-            <Stack.Screen name="Identity" component={IdentifyYourself} />
-        ) : (
-            <>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
-              <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-            </>
-        )}
+        {identity == null ? incognitoStack : authenticatedStack}
       </Stack.Navigator>
   );
 }
 
-const RootNavigator = listening(rootNavigator);
+const RootNavigator = reactive(rootNavigator);
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (

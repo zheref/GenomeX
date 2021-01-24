@@ -5,8 +5,18 @@ import Column from '../../components/Column';
 import RegularInput from '../../components/RegularInput';
 import LeadingButton from '../../components/LeadingButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Dispatch} from 'react';
+import {persistIdentityString} from '../../repositories/auth';
+import {connect} from 'react-redux';
+import {identifyThunk} from '../../stores/auth/thunks';
 
-export default function IdentifyYourself(): React.ComponentElement<any, any> {
+interface IdentifyYourselfProps {
+  dispatchIdentify: (identity: string) => void;
+}
+
+function IdentifyYourself({dispatchIdentify}: IdentifyYourselfProps): React.ComponentElement<IdentifyYourselfProps, any> {
+  const [identity, setIdentity] = React.useState('');
+
   return (
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAwareScrollView keyboardDismissMode="interactive"
@@ -16,11 +26,22 @@ export default function IdentifyYourself(): React.ComponentElement<any, any> {
             <>
               <Text style={styles.welcomeText}>Welcome</Text>
               <Text style={styles.prompt}>Let us know who you are...</Text>
-              <RegularInput style={styles.input} placeholder="Enter your bio handle" returnKeyType="done" />
-              <LeadingButton style={styles.cta} caption="Continue"/>
+              <RegularInput style={styles.input} placeholder="Enter your bio handle" returnKeyType="done"
+                            value={identity} onChangeText={(text) => setIdentity(text)}/>
+              <LeadingButton style={styles.cta} caption="Continue" onPress={() => dispatchIdentify(identity)}/>
             </>
           </Column>
         </KeyboardAwareScrollView>
       </SafeAreaView>
   )
 }
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  dispatchIdentify: (identity: string) => dispatch(identifyThunk(identity)),
+});
+
+const reactive = connect(mapStateToProps, mapDispatchToProps);
+
+export default reactive(IdentifyYourself);

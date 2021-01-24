@@ -6,6 +6,7 @@ import Font from '../resources/fonts';
 interface LeadingButtonProps {
   style?: object;
   caption: string;
+  onPress: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
 
 export default function LeadingButton(props: LeadingButtonProps): React.ComponentElement<LeadingButtonProps, any> {
   return (
-      <TouchableOpacity style={{...styles.own, ...props.style}}>
+      <TouchableOpacity style={{...styles.own, ...props.style}} onPress={props.onPress}>
         <Text style={styles.caption}>{props.caption}</Text>
       </TouchableOpacity>
   );

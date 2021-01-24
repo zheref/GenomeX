@@ -1,5 +1,5 @@
 import React from 'react';
-import {ReturnKeyTypeOptions, StyleSheet, TextInput, View} from 'react-native';
+import {Platform, ReturnKeyTypeOptions, StyleSheet, TextInput, View} from 'react-native';
 import Color from '../resources/colors';
 import Font from '../resources/fonts';
 
@@ -8,6 +8,8 @@ interface RegularInputProps {
   placeholder?: string;
   returnKeyType?: ReturnKeyTypeOptions;
   autocompleteType?: string;
+  value: string;
+  onChangeText?: (text: string) => void;
 }
 
 const styles = StyleSheet.create({
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
 export default function RegularInput(props: RegularInputProps) {
   return (
       <TextInput placeholder={props.placeholder || ''} style={{...styles.own, ...props.style}}
-                 returnKeyType={props.returnKeyType} autoCompleteType="username"/>
+                 returnKeyType={props.returnKeyType} autoCompleteType="username" value={props.value}
+                 onChangeText={props.onChangeText} keyboardType={Platform.select({ios: 'twitter', android: 'email-address'})} />
   );
 }
