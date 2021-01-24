@@ -27,6 +27,7 @@ export default StyleSheet.create({
   },
   input: {
     marginTop: 24,
+    color: Color.whiteForeground,
   },
   cta: {
     marginTop: 20,

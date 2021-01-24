@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 
 interface RowProps {
   children: React.ReactElement;
-  style?: object;
+  style?: ViewStyle;
 }
 
 const styles = StyleSheet.create({

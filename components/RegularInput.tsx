@@ -28,6 +28,6 @@ export default function RegularInput(props: RegularInputProps) {
       <TextInput placeholder={props.placeholder || ''} style={{...styles.own, ...props.style}}
                  returnKeyType={props.returnKeyType} autoCompleteType="username" value={props.value}
                  onChangeText={props.onChangeText}
-                 keyboardType={Platform.select({ios: 'twitter', android: 'email-address'})}/>
+                 keyboardType={Platform.select({ios: 'twitter', android: 'email-address'})} autoCapitalize="none" />
   );
 }
