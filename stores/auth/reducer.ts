@@ -7,7 +7,7 @@ export const initialState: AuthState = {
     userIdentity: null,
 };
 
-export default function AuthReducer(prevState: AuthState, action: Action): AuthState {
+export default function AuthReducer(prevState: AuthState = initialState, action: Action): AuthState {
     const {type, payload} = action;
     const {restoreIdentity, signIn, signOut} = ActionTypes;
 

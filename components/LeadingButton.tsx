@@ -11,9 +11,9 @@ interface LeadingButtonProps {
 const styles = StyleSheet.create({
   own: {
     backgroundColor: Color.whiteForeground,
-    height: 60,
-    paddingVertical: 18,
-    borderRadius: 20,
+    height: 50,
+    paddingVertical: 14,
+    borderRadius: 16,
     justifyContent: 'center',
     flexDirection: 'row',
   },

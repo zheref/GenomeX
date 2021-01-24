@@ -37,6 +37,7 @@
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
     "@types/jest": "^26.0.20",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@types/react-redux": "^7.1.16",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
@@ -56,6 +58,7 @@
     "jest-expo": "~40.0.0",
     "prettier": "2.2.1",
     "redux-devtools": "^3.7.0",
+    "redux-devtools-extension": "^2.13.8",
     "typescript": "~4.0.0"
   },
   "private": true
