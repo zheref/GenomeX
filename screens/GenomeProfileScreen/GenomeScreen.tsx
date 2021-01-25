@@ -1,20 +1,36 @@
 import * as React from 'react';
-import {Platform, SafeAreaView, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, Text} from 'react-native';
 
 import {View} from '../../components/Themed';
-import Color from '../../resources/colors';
+import Color from '../../constants/Color';
 import IconButton from '../../components/IconButton';
 import {Ionicons} from '@expo/vector-icons';
 import Row from '../../components/Row';
 import {connect} from 'react-redux';
-import {Dispatch} from 'react';
+import {Dispatch, useEffect} from 'react';
 import {forgetIdentityThunk} from '../../stores/auth/thunks';
+import {fetchBioThunk} from '../../stores/bio/thunks';
+import {Genome} from '../../stores/bio/types';
+import {RootState} from '../../stores/types';
+import ActivityFragment from '../../components/ActivityFragment';
 
 interface GenomeProfileScreenProps {
   dispatchSignOut: () => void;
+  dispatchRefresh: () => void;
+  isLoading: boolean;
+  genome: Genome | null;
 }
 
-function GenomeProfileScreen({dispatchSignOut}: GenomeProfileScreenProps): React.ComponentElement<GenomeProfileScreenProps, any> {
+function GenomeProfileScreen({
+                               dispatchRefresh,
+                               dispatchSignOut,
+                               isLoading,
+                               genome
+                             }: GenomeProfileScreenProps): React.ComponentElement<GenomeProfileScreenProps, any> {
+  useEffect(() => {
+    dispatchRefresh();
+  }, []);
+
   return (
       <View style={styles.container}>
         <Row style={{flexDirection: 'row-reverse'}}>
@@ -24,7 +40,10 @@ function GenomeProfileScreen({dispatchSignOut}: GenomeProfileScreenProps): React
             <Ionicons name="exit" size={24} color="black"/>
           </IconButton>
         </Row>
-
+        {isLoading && <ActivityFragment animated={true} darkMode={false} />}
+        {genome !== null && (
+            <Text>There's a genome!</Text>
+        )}
       </View>
   );
 }
@@ -47,11 +66,19 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = (state: RootState) => ({
+  isLoading: state.bio.isLoading,
+  genome: state.bio.genome,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   dispatchSignOut: () => {
     dispatch(forgetIdentityThunk());
   },
-})
+  dispatchRefresh: () => {
+    dispatch(fetchBioThunk());
+  },
+});
 
-const reactive = connect(undefined, mapDispatchToProps);
+const reactive = connect(mapStateToProps, mapDispatchToProps);
 export default reactive(GenomeProfileScreen);

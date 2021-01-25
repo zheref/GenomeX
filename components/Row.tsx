@@ -7,14 +7,14 @@ interface RowProps {
 }
 
 const styles = StyleSheet.create({
-  row: {
+  container: {
     flexDirection: 'row',
   },
 });
 
 export default function Row(props: RowProps) {
   return (
-      <View style={{...styles.row, ...props.style}}>
+      <View style={{...styles.container, ...props.style}}>
         {props.children}
       </View>
   );

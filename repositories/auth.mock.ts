@@ -1,4 +1,4 @@
-import Keys from '../resources/keys';
+import Keys from '../constants/Keys';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export async function fetchIdentityString(): Promise<string | null> {

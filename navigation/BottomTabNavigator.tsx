@@ -12,7 +12,7 @@ import {
   GestureResponderEvent, TouchableOpacity,
 } from 'react-native';
 import Center from '../components/Center';
-import Color from '../resources/colors';
+import Color from '../constants/Color';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import Color from '../resources/colors';
+import Color from '../constants/Color';
 
 export default function JobsScreen() {
   return (

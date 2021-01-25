@@ -1,22 +1,20 @@
 import {ActionTypes} from './actions';
-import {Action} from '../types';
 
-export function restoreIdentityAction(identity: string): Action {
-  return {
-    type: ActionTypes.restoreIdentity,
-    payload: identity,
-  };
-}
+export const restoreIdentityAction = (identity: string) => ({
+  type: ActionTypes.restoreIdentity,
+  payload: identity,
+});
 
-export function signInAction(identity: string): Action {
-  return {
-    type: ActionTypes.signIn,
-    payload: identity,
-  };
-}
+export const signInAction = (identity: string) => ({
+  type: ActionTypes.signIn,
+  payload: identity,
+});
 
-export function signOut(): Action {
-  return {
-    type: ActionTypes.signOut,
-  };
-}
+export const signOutAction = () => ({
+  type: ActionTypes.signOut,
+});
+
+export const loadingChangeAction = (newVal: boolean) => ({
+  type: ActionTypes.loadingChange,
+  payload: newVal,
+});

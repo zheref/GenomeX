@@ -1,7 +1,7 @@
 import React from 'react';
 import {Platform, ReturnKeyTypeOptions, StyleSheet, TextInput, View} from 'react-native';
-import Color from '../resources/colors';
-import Font from '../resources/fonts';
+import Color from '../constants/Color';
+import Font from '../constants/Fonts';
 
 interface RegularInputProps {
   style?: object;

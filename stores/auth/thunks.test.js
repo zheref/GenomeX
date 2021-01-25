@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {initialState} from "./reducer";
 import {bootstrapThunk, forgetIdentityThunk, identifyThunk} from './thunks';
-import {restoreIdentityAction, signInAction, signOut} from './creators';
+import {restoreIdentityAction, signInAction, signOutAction} from './creators';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -40,7 +40,7 @@ describe('auth side effects', () => {
     const store = mockStore(setupState());
     await store.dispatch(forgetIdentityThunk());
     expect(store.getActions()).toStrictEqual([
-        signOut(),
+        signOutAction(),
     ]);
   })
 });

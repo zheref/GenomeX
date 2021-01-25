@@ -1,6 +1,6 @@
-import {StateIndependentThunk} from './types';
 import {fetchIdentityString, forgetIdentityString, persistIdentityString} from '../../repositories/auth';
-import {restoreIdentityAction, signInAction, signOut} from './creators';
+import {loadingChangeAction, restoreIdentityAction, signInAction, signOutAction} from './creators';
+import {StateIndependentThunk} from '../types';
 
 export const bootstrapThunk = (): StateIndependentThunk => async (dispatch) => {
   try {
@@ -8,10 +8,13 @@ export const bootstrapThunk = (): StateIndependentThunk => async (dispatch) => {
 
     if (identity) {
       dispatch(restoreIdentityAction(identity));
+    } else {
+      dispatch(loadingChangeAction(false));
     }
   } catch (e) {
     // TODO: Display user friendly error
     console.error(e);
+    dispatch(loadingChangeAction(false));
   }
 }
 
@@ -28,7 +31,7 @@ export const identifyThunk = (identity: string): StateIndependentThunk => async 
 export const forgetIdentityThunk = (): StateIndependentThunk => async dispatch => {
   try {
     await forgetIdentityString();
-    dispatch(signOut());
+    dispatch(signOutAction());
   } catch (e) {
     // TODO: Display user friendly error
     console.error(e);

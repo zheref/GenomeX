@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import Color from '../resources/colors';
-import Font from '../resources/fonts';
+import Color from '../constants/Color';
+import Font from '../constants/Fonts';
 
 interface LeadingButtonProps {
   style?: object;

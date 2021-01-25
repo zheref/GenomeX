@@ -1,15 +1,15 @@
-import {Action} from '../types';
 import {ActionTypes} from './actions';
 import {AuthState} from './types';
+import {AnyAction} from 'redux';
 
 export const initialState: AuthState = {
     isLoading: true,
     userIdentity: null,
 };
 
-export default function AuthReducer(prevState: AuthState = initialState, action: Action): AuthState {
+export default function AuthReducer(prevState: AuthState = initialState, action: AnyAction): AuthState {
     const {type, payload} = action;
-    const {restoreIdentity, signIn, signOut} = ActionTypes;
+    const {restoreIdentity, signIn, signOut, loadingChange} = ActionTypes;
 
     switch (type) {
         case restoreIdentity:
@@ -29,6 +29,11 @@ export default function AuthReducer(prevState: AuthState = initialState, action:
                 ...prevState,
                 userIdentity: null,
             };
+        case loadingChange:
+            return {
+                ...prevState,
+                isLoading: payload as boolean,
+            }
         default:
             return prevState;
     }

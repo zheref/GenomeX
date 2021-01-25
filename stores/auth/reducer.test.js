@@ -1,5 +1,5 @@
 import AuthReducer, {initialState} from "./reducer";
-import {restoreIdentityAction, signInAction, signOut} from "./creators";
+import {loadingChangeAction, restoreIdentityAction, signInAction, signOutAction} from "./creators";
 
 describe('auth reducer', () => {
   test('restores identity', () => {
@@ -21,9 +21,17 @@ describe('auth reducer', () => {
   });
 
   test('signs out forgetting set identity', () => {
-    expect(AuthReducer(initialState, signOut())).toStrictEqual({
+    expect(AuthReducer(initialState, signOutAction())).toStrictEqual({
       ...initialState,
       userIdentity: null,
     });
   });
+
+  test('changes loading value', () => {
+    const loading = false;
+    expect(AuthReducer(initialState, loadingChangeAction(loading))).toStrictEqual({
+      ...initialState,
+      isLoading: loading,
+    })
+  })
 })

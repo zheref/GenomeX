@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import Keys from '../resources/keys';
+import Keys from '../constants/Keys';
 
 export async function fetchIdentityString(): Promise<string | null> {
     return await AsyncStorage.getItem(Keys.identityString);

@@ -2,4 +2,5 @@ export const ActionTypes = {
     restoreIdentity: 'RESTORE_IDENTITY',
     signIn: 'SIGN_IN',
     signOut: 'SIGN_OUT',
+    bioLoadingChange: 'LOADING_CHANGE',
 }

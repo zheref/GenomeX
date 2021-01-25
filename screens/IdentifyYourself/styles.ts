@@ -1,6 +1,6 @@
 import {Platform, StyleSheet} from 'react-native';
-import Color from '../../resources/colors';
-import Font from '../../resources/fonts';
+import Color from '../../constants/Color';
+import Font from '../../constants/Fonts';
 
 export default StyleSheet.create({
   safeArea: {

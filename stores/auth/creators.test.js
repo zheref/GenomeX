@@ -1,4 +1,4 @@
-import {restoreIdentityAction, signInAction, signOut} from "./creators";
+import {loadingChangeAction, restoreIdentityAction, signInAction, signOutAction} from "./creators";
 import {ActionTypes} from "./actions";
 
 describe('auth creators', () => {
@@ -19,8 +19,16 @@ describe('auth creators', () => {
   });
 
   test('sign out creator builds valid action with corresponding payload', () => {
-    expect(signOut()).toStrictEqual({
+    expect(signOutAction()).toStrictEqual({
       type: ActionTypes.signOut,
+    });
+  });
+
+  test('creates valid action that changes loading value', () => {
+    const loading = false;
+    expect(loadingChangeAction(loading)).toStrictEqual({
+      type: ActionTypes.loadingChange,
+      payload: loading,
     });
   });
 })
