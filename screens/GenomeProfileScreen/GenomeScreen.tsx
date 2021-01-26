@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FlatList, RefreshControl, ScrollView, Text} from 'react-native';
+import {FlatList, RefreshControl, SafeAreaView, Text} from 'react-native';
 
 import {View} from '../../components/Themed';
 import Color from '../../constants/Color';
@@ -77,7 +77,7 @@ function GenomeProfileScreen({
   );
 
   return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Row style={styles.headerRow}>
           <IconButton onPress={() => {
             dispatchSignOut();
@@ -97,7 +97,7 @@ function GenomeProfileScreen({
                         <RefreshControl refreshing={isLoading} onRefresh={dispatchRefresh}/>
                       }/>
         )}
-      </View>
+      </SafeAreaView>
   );
 }
 

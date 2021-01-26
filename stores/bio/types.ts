@@ -78,4 +78,5 @@ export interface Genome {
     stats: Stats;
     strengths: Strength[];
     experiences: BioExperience[];
+    message?: string;
 }
