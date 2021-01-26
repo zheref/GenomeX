@@ -15,6 +15,6 @@ export const signOutAction = () => ({
 });
 
 export const loadingChangeAction = (newVal: boolean) => ({
-  type: ActionTypes.loadingChange,
+  type: ActionTypes.loadingChangeAction,
   payload: newVal,
 });

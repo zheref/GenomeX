@@ -57,7 +57,7 @@ export interface BioLocation {
 export interface BioExperienceOrg {
     id: string;
     name: string;
-    picture: string;
+    picture?: string;
 }
 
 export interface BioExperience {
@@ -69,6 +69,8 @@ export interface BioExperience {
     fromYear: string;
     remote: boolean;
     weight: number;
+    toMonth: string;
+    toYear: string;
 }
 
 export interface Genome {

@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
+  icon: {
+    height: 40,
+    width: 40,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  }
 });
 
 export default function ExpCard({
@@ -52,22 +58,30 @@ export default function ExpCard({
                                   onPress,
                                 }: ExpCardProps): React.ComponentElement<ExpCardProps, any> {
 
+  const dateRange = `${exp.fromYear} ${exp.toYear ? `- ${exp.toYear}` : ''}`;
+  const org = exp.organizations[0];
+
   return (
       <TouchableOpacity style={{...styles.own, ...style}} onPress={onPress}>
         <Column style={styles.imageCol}>
-          <Image
-              style={{height: 40, width: 40, borderRadius: 20,}}
-              source={{
-                uri: `${exp.organizations[0].picture}`,
-              }}
-          />
+          {org.picture ? (
+              <Image
+                  style={{height: 40, width: 40, borderRadius: 20,}}
+                  source={{
+                    uri: `${org.picture}`,
+                  }}
+              />
+          ) : <Entypo name="suitcase" size={24} color="black" style={styles.icon}/>}
         </Column>
         <Column style={styles.textCol}>
           <>
             <Row>
               <Text style={styles.title} lineBreakMode="clip">{exp.name}</Text>
             </Row>
-            <Text style={styles.position}>{exp.organizations[0].name}</Text>
+            <Text
+                style={styles.position}>
+              {exp.organizations[0].name} · {dateRange}
+            </Text>
           </>
         </Column>
       </TouchableOpacity>

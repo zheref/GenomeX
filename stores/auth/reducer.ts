@@ -9,7 +9,7 @@ export const initialState: AuthState = {
 
 export default function AuthReducer(prevState: AuthState = initialState, action: AnyAction): AuthState {
     const {type, payload} = action;
-    const {restoreIdentity, signIn, signOut, bioLoadingChange} = ActionTypes;
+    const {restoreIdentity, signIn, signOut, loadingChangeAction} = ActionTypes;
 
     switch (type) {
         case restoreIdentity:
@@ -29,7 +29,7 @@ export default function AuthReducer(prevState: AuthState = initialState, action:
                 ...prevState,
                 userIdentity: null,
             };
-        case bioLoadingChange:
+        case loadingChangeAction:
             return {
                 ...prevState,
                 isLoading: payload as boolean,
