@@ -18,6 +18,7 @@ const Color: ColorConfiguration = {
   linkedin: '#0577b5',
   facebook: '#3c599a',
   twitter: '#57acef',
+  link: '#535353',
 };
 
 export default Color;

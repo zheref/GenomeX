@@ -17,7 +17,6 @@ interface ProfileCardProps {
 const styles = StyleSheet.create({
   own: {
     backgroundColor: Color.whiteBackground,
-    height: 144,
     width: 180,
     paddingVertical: 14,
     paddingHorizontal: 20,

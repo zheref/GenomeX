@@ -31,12 +31,14 @@ export default function LinkCard({
                                    link
                                  }: LinkCardProps): React.ComponentElement<LinkCardProps, any> {
 
+  const service = link.name === '' ? 'link' : link.name;
+
   return (
       <TouchableOpacity style={{...styles.own, ...style}} onPress={() => {
         Linking.openURL(link.address);
       }}>
         <Center>
-          <Entypo name={link.name} size={30} color={Color[`${link.name}`]}/>
+          <Entypo name={service} size={30} color={Color[`${service}`]}/>
         </Center>
       </TouchableOpacity>
   );

@@ -4,7 +4,7 @@ export interface BioState {
     isLoading: boolean;
 }
 
-export type LinkService = 'instagram' | 'github' | 'linkedin' | 'facebook' | 'twitter';
+export type LinkService = 'instagram' | 'github' | 'linkedin' | 'facebook' | 'twitter' | '';
 
 export interface GenomeLink {
     id: string;
@@ -54,8 +54,26 @@ export interface BioLocation {
     timezoneOffSet: number;
 }
 
+export interface BioExperienceOrg {
+    id: string;
+    name: string;
+    picture: string;
+}
+
+export interface BioExperience {
+    id: string;
+    category: string;
+    name: string;
+    organizations: BioExperienceOrg[];
+    fromMonth: string;
+    fromYear: string;
+    remote: boolean;
+    weight: number;
+}
+
 export interface Genome {
     person: GenomePerson;
     stats: Stats;
     strengths: Strength[];
+    experiences: BioExperience[];
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FlatList, Platform, ScrollView, StyleSheet, Text} from 'react-native';
+import {FlatList, RefreshControl, ScrollView, Text} from 'react-native';
 
 import {View} from '../../components/Themed';
 import Color from '../../constants/Color';
@@ -8,33 +8,73 @@ import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import Row from '../../components/Row';
 import {connect} from 'react-redux';
 import {Dispatch, useEffect} from 'react';
+import {BioExperience, Genome} from '../../stores/bio/types';
+import ProfileCard from '../../components/ProfileCard';
+import Column from '../../components/Column';
+import LinkCard from '../../components/LinkCard';
+import ExpCard from '../../components/ExpCard';
+import styles from './styles';
+import {RootState} from '../../stores/types';
 import {forgetIdentityThunk} from '../../stores/auth/thunks';
 import {fetchBioThunk} from '../../stores/bio/thunks';
-import {Genome} from '../../stores/bio/types';
-import {RootState} from '../../stores/types';
-import ActivityFragment from '../../components/ActivityFragment';
-import ProfileCard from '../../components/ProfileCard';
-import {forgetBioAction} from '../../stores/bio/creators';
-import Column from '../../components/Column';
-import Font from '../../constants/Fonts';
-import LinkCard from '../../components/LinkCard';
+import {getJobs} from '../../stores/bio/selectors';
 
 interface GenomeProfileScreenProps {
   dispatchSignOut: () => void;
   dispatchRefresh: () => void;
   isLoading: boolean;
   genome: Genome | null;
+  jobs: BioExperience[];
 }
 
 function GenomeProfileScreen({
                                dispatchRefresh,
                                dispatchSignOut,
                                isLoading,
-                               genome
+                               genome,
+                               jobs,
                              }: GenomeProfileScreenProps): React.ComponentElement<GenomeProfileScreenProps, any> {
   useEffect(() => {
     dispatchRefresh();
   }, []);
+
+  const fixedTree = (genome: Genome) => (
+      <Column style={styles.contentColumn}>
+        <>
+          <Text style={styles.title}>Your Genome</Text>
+          <Row style={styles.genomeRow}>
+            <>
+              <ProfileCard onPress={() => {
+              }} person={genome.person}/>
+              <Column style={{justifyContent: 'flex-end',}}>
+                <View style={styles.weightCard}>
+                  <MaterialCommunityIcons style={styles.weightCardIcon} name="weight" size={24}
+                                          color={Color.darkerForeground}/>
+                  <Text style={styles.weighCardValue}>{Math.ceil(genome.person.weight)}</Text>
+                  <Text style={styles.weightCardCaption}>Reputation</Text>
+                </View>
+              </Column>
+            </>
+          </Row>
+          <FlatList data={genome.person.links}
+                    renderItem={({item}) => <LinkCard link={item} style={styles.linkCard}/>}
+                    keyExtractor={(link) => link.id} horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.linksFlatListContentContainer}/>
+          <Text style={styles.heading}>Skills</Text>
+          <FlatList data={genome.strengths}
+                    renderItem={({item}) => (
+                        <View style={styles.skillContainer}>
+                          <Text style={styles.skillText}>{item.name}</Text>
+                        </View>
+                    )}
+                    keyExtractor={(strength) => strength.id} horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.skillsFlatListContentContainer}/>
+          <Text style={styles.heading}>Experience</Text>
+        </>
+      </Column>
+  );
 
   return (
       <View style={styles.container}>
@@ -45,109 +85,31 @@ function GenomeProfileScreen({
             <Ionicons name="exit" size={24} color="black"/>
           </IconButton>
         </Row>
-        {isLoading && <ActivityFragment animated={true} darkMode={false}/>}
-        {genome !== null && (
-            <ScrollView>
-              <Column style={styles.contentColumn}>
-                <>
-                  <Text style={styles.title}>Your Genome</Text>
-                  <Row style={styles.genomeRow}>
-                    <>
-                      <ProfileCard onPress={() => {
-                      }} person={genome.person}/>
-                      <Column style={{justifyContent: 'flex-end',}}>
-                        <View style={styles.weightCard}>
-                          <MaterialCommunityIcons style={styles.weightCardIcon} name="weight" size={24}
-                                                  color={Color.darkerForeground}/>
-                          <Text style={styles.weighCardValue}>{Math.ceil(genome.person.weight)}</Text>
-                          <Text style={styles.weightCardCaption}>Reputation</Text>
-                        </View>
-                      </Column>
-                    </>
-                  </Row>
-                  <Row style={styles.linksRow}>
-                    <FlatList data={genome.person.links}
-                              renderItem={({item}) => <LinkCard link={item} style={styles.linkCard}/>}
-                              keyExtractor={(link) => link.id} horizontal={true}
-                              showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20 }} />
-                  </Row>
-                </>
-              </Column>
-            </ScrollView>
+        {(
+            <FlatList data={jobs}
+                      ListHeaderComponent={genome !== null ? fixedTree(genome) : null}
+                      keyExtractor={(strength) => strength.id}
+                      contentContainerStyle={styles.containerFlatListContentStyle}
+                      showsHorizontalScrollIndicator={false}
+                      renderItem={({item}) => <ExpCard exp={item} onPress={() => {
+                      }} style={styles.expCard}/>}
+                      refreshControl={
+                        <RefreshControl refreshing={isLoading} onRefresh={dispatchRefresh}/>
+                      }/>
         )}
       </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.lightBackground,
-    paddingTop: Platform.select({ios: 0, android: 40}),
-  },
-  headerRow: {
-    flexDirection: 'row-reverse',
-    marginHorizontal: 20,
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-  title: {
-    paddingLeft: 20,
-    fontSize: 30,
-    fontWeight: 'bold',
-    fontFamily: Font.mainFont,
-  },
-  contentColumn: {
-    marginTop: 24,
-    color: Color.darkerForeground,
-  },
-  genomeRow: {
-    marginLeft: 20,
-    marginTop: 20,
-  },
-  weightCard: {
-    backgroundColor: Color.whiteBackground,
-    height: 110,
-    width: 110,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    paddingLeft: 20,
-    borderRadius: 22,
-    flexDirection: 'column',
-    marginLeft: 10,
-  },
-  weightCardIcon: {},
-  weighCardValue: {
-    fontSize: 18,
-    marginTop: 8,
-    color: Color.darkerForeground,
-    fontWeight: 'bold',
-    marginBottom: 7,
-  },
-  weightCardCaption: {
-    fontSize: 14,
-    color: Color.darkForeground,
-  },
-  linksRow: {
-    marginTop: 10,
-  },
-  linkCard: {
-    marginRight: 10,
-  }
-});
-
 const mapStateToProps = (state: RootState) => ({
   isLoading: state.bio.isLoading,
   genome: state.bio.genome,
+  jobs: getJobs(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   dispatchSignOut: () => {
     dispatch(forgetIdentityThunk());
-    dispatch(forgetBioAction());
   },
   dispatchRefresh: () => {
     dispatch(fetchBioThunk());
