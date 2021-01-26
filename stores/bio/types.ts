@@ -6,7 +6,7 @@ export interface BioState {
 
 export type LinkService = 'instagram' | 'github' | 'linkedin' | 'facebook' | 'twitter';
 
-export interface Link {
+export interface GenomeLink {
     id: string;
     name: LinkService;
     address: string;
@@ -21,7 +21,7 @@ export interface GenomePerson {
     locale: string;
     picture: string;
     name: string;
-    links: Link[];
+    links: GenomeLink[];
     pictureThumbnail: string;
     summaryOfBio: string;
     weightGraph: string;
