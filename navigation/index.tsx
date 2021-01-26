@@ -63,11 +63,10 @@ function rootNavigator({identity, loading, dispatchBootstrap}: RootNavigatorProp
 
 const RootNavigator = reactive(rootNavigator);
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation() {
   return (
       <NavigationContainer
-          linking={LinkingConfiguration}
-          theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          linking={LinkingConfiguration} >
         <RootNavigator />
       </NavigationContainer>
   );

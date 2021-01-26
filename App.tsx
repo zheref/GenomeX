@@ -1,29 +1,43 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import Store from './stores';
+import {RootState} from './stores/types';
+import {ScreenStand} from './stores/meta/types';
 
+interface AppBodyProps {
+  screenStand: ScreenStand;
+}
+
+function appBody({screenStand}: AppBodyProps): React.ComponentElement<AppBodyProps, any> {
+  return (
+      <SafeAreaProvider>
+        <Navigation />
+        <StatusBar style={screenStand === 'genome' ? 'dark' : 'light'} />
+      </SafeAreaProvider>
+  );
+}
+
+const reactive = connect((state: RootState) => ({
+  screenStand: state.meta.screenStand,
+}));
+
+const AppBody = reactive(appBody);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <Provider store={Store}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
+        <AppBody />
       </Provider>
-
     );
   }
 }

@@ -1,4 +1,5 @@
 export const ActionTypes = {
-    didFetchBio: 'DID_FETCHBIO',
-    bioLoadingChange: 'BIO_LOADING_CHANGE',
+    didFetchBioAction: 'DID_FETCHBIO',
+    bioLoadingChangeAction: 'BIO_LOADING_CHANGE',
+    forgetBioAction: 'FORGET_BIO',
 }

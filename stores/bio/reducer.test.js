@@ -1,4 +1,4 @@
-import {didFetchBioAction, bioLoadingChangeAction} from './creators';
+import {didFetchBioAction, bioLoadingChangeAction, forgetBioAction} from './creators';
 import BioReducer, {initialState} from './reducer';
 import {mockedMe} from '../../repositories/bio.mock';
 
@@ -16,6 +16,18 @@ describe('bio reducer', () => {
     expect(BioReducer(initialState, bioLoadingChangeAction(isLoading))).toStrictEqual({
       ...initialState,
       isLoading,
+    });
+  });
+
+  test('forget cached bio for current authenticate identity', () => {
+    const installedState = {
+      ...initialState,
+      genome: mockedMe,
+    };
+
+    expect(BioReducer(installedState, forgetBioAction())).toStrictEqual({
+      ...installedState,
+      genome: null,
     });
   });
 })

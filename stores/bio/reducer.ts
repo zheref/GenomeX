@@ -23,15 +23,24 @@ function setLoading(prevState: BioState, payload: boolean): BioState {
   };
 }
 
+function forgetBio(prevState: BioState): BioState {
+  return {
+    ...prevState,
+    genome: null,
+  };
+}
+
 export default function BioReducer(prevState: BioState = initialState, action: AnyAction): BioState {
   const {type, payload} = action;
-  const {didFetchBio, bioLoadingChange} = ActionTypes;
+  const {didFetchBioAction, bioLoadingChangeAction, forgetBioAction} = ActionTypes;
 
   switch (type) {
-    case didFetchBio:
+    case didFetchBioAction:
       return setBio(prevState, payload as Genome);
-    case bioLoadingChange:
+    case bioLoadingChangeAction:
       return setLoading(prevState, payload as boolean);
+    case forgetBioAction:
+      return forgetBio(prevState);
     default:
       return prevState;
   }

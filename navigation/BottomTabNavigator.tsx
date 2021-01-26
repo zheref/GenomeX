@@ -13,6 +13,10 @@ import {
 } from 'react-native';
 import Center from '../components/Center';
 import Color from '../constants/Color';
+import {Dispatch} from 'react';
+import {connect} from 'react-redux';
+import {ScreenStand} from '../stores/meta/types';
+import {setTabStandAction} from '../stores/meta/creators';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -34,7 +38,11 @@ function CustomTabBarItem(props: CustomTabBarItemProps): React.ReactElement {
   )
 }
 
-export default function BottomTabNavigator() {
+interface BottomTabNavigatorProps {
+  dispatchSetTabStand: (tabStand: ScreenStand) => void;
+}
+
+function BottomTabNavigator({dispatchSetTabStand}: BottomTabNavigatorProps) {
   const colorScheme = useColorScheme();
 
   return (
@@ -49,8 +57,11 @@ export default function BottomTabNavigator() {
             name="Genome"
             component={GenomeNavigator}
             options={{
-              tabBarButton: (props: BottomTabBarButtonProps) => (
-                  <CustomTabBarItem onPress={props.onPress} backgroundColor={Color.lightBackground}>
+              tabBarButton: ({onPress}: BottomTabBarButtonProps) => (
+                  <CustomTabBarItem onPress={(e) => {
+                    if (onPress) { onPress(e) }
+                    dispatchSetTabStand('genome');
+                  }} backgroundColor={Color.lightBackground}>
                     <MaterialCommunityIcons name="face-profile" color="black" size={30}/>
                   </CustomTabBarItem>
               ),
@@ -60,8 +71,11 @@ export default function BottomTabNavigator() {
             name="Jobs"
             component={JobsNavigator}
             options={{
-              tabBarButton: (props: BottomTabBarButtonProps) => (
-                  <CustomTabBarItem onPress={props.onPress} backgroundColor={Color.darkerBackground}>
+              tabBarButton: ({onPress}: BottomTabBarButtonProps) => (
+                  <CustomTabBarItem onPress={(e) => {
+                    if (onPress) { onPress(e) }
+                    dispatchSetTabStand('jobs');
+                  }} backgroundColor={Color.darkerBackground}>
                     <MaterialIcons name="work" size={28} color="white"/>
                   </CustomTabBarItem>
               ),
@@ -102,3 +116,12 @@ function JobsNavigator() {
       </JobsStack.Navigator>
   );
 }
+
+const reactive = connect(undefined, (dispatch: Dispatch<any>) => ({
+  dispatchSetTabStand: (tabStand: ScreenStand) => {
+    dispatch(setTabStandAction(tabStand));
+  }
+}));
+
+export default reactive(BottomTabNavigator);
+

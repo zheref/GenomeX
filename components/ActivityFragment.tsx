@@ -18,7 +18,7 @@ export default function ActivityFragment({darkMode, style, animated}: ActivityFr
 
   return (
       <Center style={{...styles.container, ...backgroundStyles, ...style}}>
-        <ActivityIndicator animating={animated} color={darkMode ? Color.whiteForeground : Color.darkForeground} size="large" />
+        <ActivityIndicator animating={animated} color={darkMode ? Color.whiteForeground : Color.darkerForeground} size="large" />
       </Center>
   );
 }

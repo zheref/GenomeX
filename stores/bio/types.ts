@@ -12,7 +12,7 @@ export interface Link {
     address: string;
 }
 
-export interface Person {
+export interface GenomePerson {
     professionalHeadline: string;
     completion: number;
     showPhone: boolean;
@@ -55,7 +55,7 @@ export interface BioLocation {
 }
 
 export interface Genome {
-    person: Person;
+    person: GenomePerson;
     stats: Stats;
     strengths: Strength[];
 }
