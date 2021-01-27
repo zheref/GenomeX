@@ -6,18 +6,14 @@ import Color from '../../constants/Color';
 import IconButton from '../../components/IconButton';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import Row from '../../components/Row';
-import {connect} from 'react-redux';
-import {Dispatch, useEffect} from 'react';
+import {useEffect} from 'react';
 import {BioExperience, Genome} from '../../stores/bio/types';
 import ProfileCard from '../../components/ProfileCard';
 import Column from '../../components/Column';
 import LinkCard from '../../components/LinkCard';
 import ExpCard from '../../components/ExpCard';
 import styles from './styles';
-import {RootState} from '../../stores/types';
-import {forgetIdentityThunk} from '../../stores/auth/thunks';
-import {fetchBioThunk} from '../../stores/bio/thunks';
-import {getJobs} from '../../stores/bio/selectors';
+import reactive from './reactive';
 
 interface GenomeProfileScreenProps {
   dispatchSignOut: () => void;
@@ -44,8 +40,7 @@ function GenomeProfileScreen({
           <Text style={styles.title}>Your Genome</Text>
           <Row style={styles.genomeRow}>
             <>
-              <ProfileCard onPress={() => {
-              }} person={genome.person}/>
+              <ProfileCard person={genome.person}/>
               <Column style={{justifyContent: 'flex-end',}}>
                 <View style={styles.weightCard}>
                   <MaterialCommunityIcons style={styles.weightCardIcon} name="weight" size={24}
@@ -101,20 +96,4 @@ function GenomeProfileScreen({
   );
 }
 
-const mapStateToProps = (state: RootState) => ({
-  isLoading: state.bio.isLoading,
-  genome: state.bio.genome,
-  jobs: getJobs(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  dispatchSignOut: () => {
-    dispatch(forgetIdentityThunk());
-  },
-  dispatchRefresh: () => {
-    dispatch(fetchBioThunk());
-  },
-});
-
-const reactive = connect(mapStateToProps, mapDispatchToProps);
 export default reactive(GenomeProfileScreen);

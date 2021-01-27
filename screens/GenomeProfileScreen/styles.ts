@@ -87,6 +87,17 @@ const styles = StyleSheet.create({
   containerFlatListContentStyle: {
     paddingBottom: 40,
   },
+  selfBioContainer: {
+    height: '100%',
+    backgroundColor: Color.whiteBackground,
+    flex: 1,
+    padding: 20,
+    marginHorizontal: 20,
+    marginBottom: 10,
+    paddingLeft: 20,
+    borderRadius: 22,
+    flexDirection: 'row',
+  },
 });
 
 export default styles;

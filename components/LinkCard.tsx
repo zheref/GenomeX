@@ -1,11 +1,8 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text, Image, Linking} from 'react-native';
+import {StyleSheet, TouchableOpacity, Linking} from 'react-native';
 import Color from '../constants/Color';
-import Font from '../constants/Fonts';
 import Center from './Center';
-import {GenomeLink, GenomePerson} from '../stores/bio/types';
-import Row from './Row';
-import Column from './Column';
+import {GenomeLink} from '../stores/bio/types';
 import {Entypo} from '@expo/vector-icons';
 
 interface LinkCardProps {
@@ -35,7 +32,7 @@ export default function LinkCard({
 
   return (
       <TouchableOpacity style={{...styles.own, ...style}} onPress={() => {
-        Linking.openURL(link.address);
+        Linking.openURL(link.address).then(() => {});
       }}>
         <Center>
           <Entypo name={service} size={30} color={Color[`${service}`]}/>

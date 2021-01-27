@@ -1,16 +1,15 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
+import {StyleSheet, Text, Image} from 'react-native';
 import Color from '../constants/Color';
 import Font from '../constants/Fonts';
-import Center from './Center';
 import {GenomePerson} from '../stores/bio/types';
 import Row from './Row';
 import Column from './Column';
 import {Entypo} from '@expo/vector-icons';
+import {View} from './Themed';
 
 interface ProfileCardProps {
   style?: object;
-  onPress: () => void;
   person: GenomePerson;
 }
 
@@ -50,11 +49,10 @@ const styles = StyleSheet.create({
 
 export default function ProfileCard({
                                       style,
-                                      onPress,
                                       person
                                     }: ProfileCardProps): React.ComponentElement<ProfileCardProps, any> {
   return (
-      <TouchableOpacity style={{...styles.own, ...style}} onPress={onPress}>
+      <View style={{...styles.own, ...style}}>
         <Column>
           <>
             <Image
@@ -74,6 +72,6 @@ export default function ProfileCard({
 
           </>
         </Column>
-      </TouchableOpacity>
+      </View>
   );
 }
