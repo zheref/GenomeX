@@ -18,5 +18,5 @@ CI/CD Platform: **CircleCI**
 2. If you have an Android phone, follow this link:
 [https://exp.host/@zheref/torre-genomex-expo](https://exp.host/@zheref/torre-genomex-expo)
 3. On an Android once you follow that link you'll have instructions on how to install the app using Expo Go.
-3. If you have an iPhone phone, enter the app and sign in using the credentials `zheref/Valefor2022`;
+3. If you have an iPhone phone, enter the app and sign in using the credentials `zheref/Valefor2022`.
 4. On an iOS, once you sign in successfully on the profile tab you'll find the app called `torre-genomex-expo`. Tap to open it.
