@@ -1,6 +1,6 @@
-#Changelog#
+# Changelog
 
-##Hey! It's Sergio##
+## Hey! It's Sergio
 Here I present the complete changelog of the solution I created for you guys called GenomeX. It's a native approach using React Native framework (through Expo).  
 
 In order to display my full stack skill-set I decided to go with technologies that appeal to both Web and mobile in order to create a native mobile app to show a user's bio along with some job that matches _any_ of their listed strengths.
@@ -102,18 +102,18 @@ I also have great ideas on what to do next with this app and how to make it an a
 - Create service, thunks and new state slice to take and handle best chances (job opportunities).
 - Render list of job best chances on second tab by consuming newly installed state slice.
 
-###Things I would have loved to cover given more time###
+### Things I would have loved to cover given more time
 - The app right now does not have a way to provide error feedback whatsoever. Given enough time, that's vital.
 - Despite Expo promises to be able to run app on Web browsers as well, the style mapping is not even close as expected. Yet by using a system called _Styled Components_ this can be achieved by using precise CSS syntax withing JSX that will be translated all the same to every single platform. Still have to check that out but that's what they promise: [Link Here!](https://docs.expo.io/guides/using-styled-components/).
 - Navigate to bio, job experiences and job opportunities details.
 - Set up CI/CD to automate frequently performed Dev Ops like analysis, testing, deploymen/distribution. I strongly recommend CircleCI and Bitrise.
 
-##Backlog and Roadmap Suggestion##
+## Backlog and Roadmap Suggestion
 - Of course access a fairly secured authentication system to allow users to sign in and update their bio information right from the app.
 - To improve the algorithm and UX to offer the user a way to find opportunities based on certain amount of skill set or for a given amount of years of experience.
 - A search field to do the actual people lookup.
 - A search field for looking for opportunities for a set of keywords.
 - Yet the idea that excites me the most is to be able to create an application process system so that both companies and workers can follow and manage a hiring process to the very end, wherever it ends.
 
-## Bottom line ##
+## Bottom line
 I hope you like it. Hopefully I didn't miss any important information that allow you guys to see the whole spectrum of my knowledge, versatility and experience coming from many years of love for this profession. If you have any question, please let me know right away. I will be following process this very closely.
