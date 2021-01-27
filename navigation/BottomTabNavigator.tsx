@@ -2,11 +2,10 @@ import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import {BottomTabBarButtonProps, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import GenomeProfileScreen from '../screens/GenomeProfileScreen/GenomeScreen';
-import JobsScreen from '../screens/JobsScreen';
+import GenomeProfileScreen from '../screens/GenomeProfileScreen';
 import {BottomTabParamList, GenomeParamList, JobsParamList} from '../types';
 import {
-  GestureResponderEvent,
+  GestureResponderEvent, Platform,
   TouchableOpacity,
 } from 'react-native';
 import Center from '../components/Center';
@@ -16,6 +15,7 @@ import {connect} from 'react-redux';
 import {ScreenStand} from '../stores/meta/types';
 import {setTabStandAction} from '../stores/meta/creators';
 import {RootState} from '../stores/types';
+import JobsMainScreen from '../screens/JobsMainScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -28,10 +28,10 @@ interface CustomTabBarItemProps {
   screen: ScreenStand;
 }
 
-const tabBarBackgroundForScreen = (screen: ScreenStand) => {
+export const tabBarBackgroundForScreen = (screen: ScreenStand) => {
   switch (screen) {
     case 'jobs':
-      return Color.darkerBackground;
+      return Color.darkBackground;
     case 'genome':
       return Color.whiteBackground;
     case 'auth':
@@ -42,9 +42,9 @@ const tabBarBackgroundForScreen = (screen: ScreenStand) => {
 const tabItemBackgroundForScreen = (screen: ScreenStand, selected: Boolean) => {
   switch (screen) {
     case 'jobs':
-      return selected ? Color.whiteBackground : Color.darkerBackground;
+      return selected ? Color.whiteBackground : Color.darkBackground;
     case 'genome':
-      return selected ? Color.darkerBackground : Color.whiteBackground;
+      return selected ? Color.darkBackground : Color.whiteBackground;
     case 'auth':
       return Color.darkerBackground;
   }
@@ -53,9 +53,9 @@ const tabItemBackgroundForScreen = (screen: ScreenStand, selected: Boolean) => {
 const tabIconBackgroundForScreen = (screen: ScreenStand, selected: Boolean) => {
   switch (screen) {
     case 'jobs':
-      return selected ? Color.darkerBackground : Color.whiteBackground;
+      return selected ? Color.darkBackground : Color.whiteBackground;
     case 'genome':
-      return selected ? Color.whiteBackground : Color.darkerBackground;
+      return selected ? Color.whiteBackground : Color.darkBackground;
     case 'auth':
       return Color.darkerBackground;
   }
@@ -85,14 +85,17 @@ function BottomTabNavigator({dispatchSetTabStand, screenStand}: BottomTabNavigat
       <BottomTab.Navigator
           initialRouteName="Genome"
           tabBarOptions={{
-            tabStyle: {borderRadius: 20, borderWidth: 0, backgroundColor: Color.darkerBackground},
+            tabStyle: {borderRadius: 20, borderWidth: 0, backgroundColor: tabBarBackgroundForScreen(screenStand)},
             style: {
               borderTopWidth: 0,
-              elevation: 0,
-              borderRadius: 20,
+              elevation: 1,
+              borderTopRightRadius: 20,
+              borderTopLeftRadius: 20,
               backgroundColor: tabBarBackgroundForScreen(screenStand),
               paddingHorizontal: 7,
               paddingTop: 5,
+              paddingBottom: Platform.select({ios: 20, android: 5}),
+              height: Platform.select({ios: 80, android: 60}),
             }
           }}>
         <BottomTab.Screen
@@ -155,12 +158,8 @@ function JobsNavigator() {
       <JobsStack.Navigator>
         <JobsStack.Screen
             name="JobSearch"
-            component={JobsScreen}
-            options={{
-              headerTitle: 'Jobs',
-              headerStyle: {backgroundColor: Color.darkerBackground, elevation: 0},
-              headerTitleStyle: {color: Color.whiteForeground}
-            }}
+            component={JobsMainScreen}
+            options={{header: () => null, cardStyle: {backgroundColor: Color.darkerBackgroud}}}
         />
       </JobsStack.Navigator>
   );

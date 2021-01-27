@@ -54,7 +54,7 @@ export interface BioLocation {
     timezoneOffSet: number;
 }
 
-export interface BioExperienceOrg {
+export interface Org {
     id: string;
     name: string;
     picture?: string;
@@ -64,7 +64,7 @@ export interface BioExperience {
     id: string;
     category: string;
     name: string;
-    organizations: BioExperienceOrg[];
+    organizations: Org[];
     fromMonth: string;
     fromYear: string;
     remote: boolean;

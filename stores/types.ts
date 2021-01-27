@@ -3,11 +3,13 @@ import {Action, AnyAction} from 'redux';
 import {AuthState} from './auth/types';
 import {BioState} from './bio/types';
 import {MetaState} from './meta/types';
+import {JobsState} from './jobs/types';
 
 export interface RootState {
     auth: AuthState;
     bio: BioState;
     meta: MetaState;
+    jobs: JobsState;
 }
 
 export type AutoThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;

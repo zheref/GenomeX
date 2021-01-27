@@ -7,17 +7,13 @@ import {connect} from 'react-redux';
 import {fetchJobsThunk} from '../../stores/jobs/thunks';
 
 const mapStateToProps = (state: RootState) => ({
-  isLoading: state.bio.isLoading,
-  genome: state.bio.genome,
-  jobs: getJobs(state),
+  isLoading: state.jobs.isLoading,
+  opportunities: state.jobs.opportunities,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  dispatchSignOut: () => {
-    dispatch(forgetIdentityThunk());
-  },
   dispatchDownload: () => {
-    dispatch(fetchBioThunk());
+    dispatch(fetchJobsThunk());
   },
   dispatchRefresh: () => {
     dispatch(fetchBioThunk());

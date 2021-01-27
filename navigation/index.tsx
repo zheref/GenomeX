@@ -5,7 +5,7 @@ import {ColorSchemeName} from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
+import BottomTabNavigator, {tabBarBackgroundForScreen} from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 import IdentifyYourself from '../screens/IdentifyYourself';
@@ -14,12 +14,15 @@ import {connect} from 'react-redux';
 import {bootstrapThunk} from '../stores/auth/thunks';
 import {Dispatch} from 'react';
 import LoadingScreen from '../screens/LoadingScreen';
+import Color from '../constants/Color';
+import {ScreenStand} from '../stores/meta/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const mapStateToProps = (state: RootState) => ({
   identity: state.auth.userIdentity,
   loading: state.auth.isLoading,
+  screen: state.meta.screenStand,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
@@ -32,9 +35,10 @@ interface RootNavigatorProps {
   identity: string | null;
   loading: boolean;
   dispatchBootstrap: () => void;
+  screen: ScreenStand;
 }
 
-function rootNavigator({identity, loading, dispatchBootstrap}: RootNavigatorProps): React.ComponentElement<RootNavigatorProps, any> {
+function rootNavigator({identity, loading, dispatchBootstrap, screen}: RootNavigatorProps): React.ComponentElement<RootNavigatorProps, any> {
   React.useEffect(() => {
     dispatchBootstrap();
   }, []);
@@ -45,7 +49,13 @@ function rootNavigator({identity, loading, dispatchBootstrap}: RootNavigatorProp
 
   const authenticatedStack: React.ReactElement = (
       <>
-        <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{
+          cardStyle: {
+            backgroundColor: tabBarBackgroundForScreen(screen),
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+          }
+        }} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </>
   );

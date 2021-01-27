@@ -5,7 +5,7 @@ import Font from '../../constants/Fonts';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.lightBackground,
+    backgroundColor: Color.darkerBackground,
     paddingTop: Platform.select({ios: 0, android: 40}),
   },
   headerRow: {
@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     fontFamily: Font.mainFont,
+    color: Color.whiteForeground,
+    marginBottom: 20,
   },
   contentColumn: {
     marginTop: 24,

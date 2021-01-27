@@ -17,6 +17,7 @@ import reactive from './reactive';
 
 interface GenomeProfileScreenProps {
   dispatchSignOut: () => void;
+  dispatchDownload: () => void;
   dispatchRefresh: () => void;
   isLoading: boolean;
   genome: Genome | null;
@@ -24,6 +25,7 @@ interface GenomeProfileScreenProps {
 }
 
 function GenomeProfileScreen({
+                               dispatchDownload,
                                dispatchRefresh,
                                dispatchSignOut,
                                isLoading,
@@ -31,7 +33,7 @@ function GenomeProfileScreen({
                                jobs,
                              }: GenomeProfileScreenProps): React.ComponentElement<GenomeProfileScreenProps, any> {
   useEffect(() => {
-    dispatchRefresh();
+    dispatchDownload();
   }, []);
 
   const fixedTree = (genome: Genome) => (
@@ -87,7 +89,7 @@ function GenomeProfileScreen({
                       contentContainerStyle={styles.containerFlatListContentStyle}
                       showsHorizontalScrollIndicator={false}
                       renderItem={({item}) => <ExpCard exp={item} onPress={() => {
-                      }} style={styles.expCard}/>}
+                      }} style={styles.oppCard}/>}
                       refreshControl={
                         <RefreshControl refreshing={isLoading} onRefresh={dispatchRefresh}/>
                       }/>
